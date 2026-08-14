@@ -1,0 +1,7 @@
+time,account,event_type,src_ip,dst_ip,geo_info,device,reason,success
+2026-08-10T02:12:54Z,srv_backups@aurora.local,PasswordGrant,203.0.113.77,10.30.12.9,Internal,AZR-WS-117,Normal service access,True
+2026-08-10T02:13:05Z,srv_backups@aurora.local,FailedAuth,203.0.113.77,10.30.12.9,Internal,AZR-WS-117,Invalid password attempt for service account,true
+2026-08-10T02:13:09Z,svc_maint@aurora.local,InteractiveLogon,198.51.100.34,10.30.12.9,External,AZR-WS-117,Logon with admin group membership,False
+2026-08-10T02:15:03Z,svc_maint@aurora.local,PasswordGrant,198.51.100.34,10.30.12.9,External,AUR-FILE-01,Off-hours authentication to file server,True
+2026-08-10T02:15:34Z,svc_maint@aurora.local,TokenRefresh,198.51.100.34,10.30.12.16,External,AUR-FILE-01,Service Principal token issued,True
+2026-08-10T02:29:58Z,svc_maint@aurora.local,PassTheHashAttempt,AUR-APP-01,10.30.12.20,Internal,AUR-FILE-01,Cached credential usage with new destination,False
