@@ -530,18 +530,18 @@
     </header>
 
     <nav aria-label="Primary navigation" role="tablist">
-      <button class="tab-btn active" data-tab="overview">Overview</button>
-      <button class="tab-btn" data-tab="analysis">Analysis</button>
-      <button class="tab-btn" data-tab="objectives">Learning Objectives</button>
-      <button class="tab-btn" data-tab="curriculum">Curriculum</button>
-      <button class="tab-btn" data-tab="module-detail">Module Detail</button>
-      <button class="tab-btn" data-tab="scenario">Scenario</button>
-      <button class="tab-btn" data-tab="assessments">Assessments</button>
-      <button class="tab-btn" data-tab="rubric">Rubric</button>
-      <button class="tab-btn" data-tab="resources">Resources</button>
-      <button class="tab-btn" data-tab="evaluation">Evaluation</button>
-      <button class="tab-btn" data-tab="assets">Assets & Access</button>
-      <button class="tab-btn" data-tab="design-process">Design Process</button>
+      <button type="button" class="tab-btn active" data-tab="overview" aria-controls="overview">Overview</button>
+      <button type="button" class="tab-btn" data-tab="analysis" aria-controls="analysis">Analysis</button>
+      <button type="button" class="tab-btn" data-tab="objectives" aria-controls="objectives">Learning Objectives</button>
+      <button type="button" class="tab-btn" data-tab="curriculum" aria-controls="curriculum">Curriculum</button>
+      <button type="button" class="tab-btn" data-tab="module-detail" aria-controls="module-detail">Module Detail</button>
+      <button type="button" class="tab-btn" data-tab="scenario" aria-controls="scenario">Scenario</button>
+      <button type="button" class="tab-btn" data-tab="assessments" aria-controls="assessments">Assessments</button>
+      <button type="button" class="tab-btn" data-tab="rubric" aria-controls="rubric">Rubric</button>
+      <button type="button" class="tab-btn" data-tab="resources" aria-controls="resources">Resources</button>
+      <button type="button" class="tab-btn" data-tab="evaluation" aria-controls="evaluation">Evaluation</button>
+      <button type="button" class="tab-btn" data-tab="assets" aria-controls="assets">Assets & Access</button>
+      <button type="button" class="tab-btn" data-tab="design-process" aria-controls="design-process">Design Process</button>
     </nav>
 
     <main class="content">
@@ -569,7 +569,7 @@
         </div>
 
         <div class="callout good">
-          <strong>Quality signal:</strong> This artifact emphasizes process quality over memorization. Most activities use synthetic evidence and require learners to prove how they derived conclusions.
+          <strong>Quality signal:</strong> This artifact emphasizes process quality over memorization. Most activities use realistic, sanitized evidence and require learners to prove how they derived conclusions.
         </div>
       </section>
 
@@ -596,7 +596,7 @@
             <h3>Assumptions</h3>
             <ul>
               <li>Learners can read JSON/CSV logs and basic PowerShell command strings.</li>
-              <li>All scenarios are synthetic and non-operationally sensitive.</li>
+              <li>All scenarios are realistic and non-operationally sensitive.</li>
               <li>Stakeholders accept an evidence-grade scale and risk-based escalation path.</li>
             </ul>
           </div>
@@ -745,7 +745,7 @@
             <ul>
               <li>Purpose: anchor role expectations and triage discipline.</li>
               <li>Core concepts: signal vs. noise, urgency ladders, evidence-first notes.</li>
-              <li>Practice: 12 synthetic triage cases with confidence labels.</li>
+              <li>Practice: 12 scenario-based triage cases with confidence labels.</li>
               <li>Assessment: scenario triage quiz + facilitator calibration.</li>
               <li>Output: triage decisions with rationale and escalation path.</li>
             </ul>
@@ -957,7 +957,7 @@ Action impact if wrong: __________</pre>
         <p class="section-intro">A fictional and sanitized case designed to test analytical discipline. The learner is repeatedly exposed to incomplete and ambiguous evidence.</p>
         <div class="callout">
           <strong>Case context:</strong> Aurora Financial, a 3200-user SaaS provider, receives a SOC alert at 02:13 UTC on workstation <code>AZR-WS-117</code> indicating suspicious PowerShell execution. Initial evidence is ambiguous.</div>
-        <p class="small">Core evidence is also available as downloadable synthetic packets in <a href="./data/aurora_case_alerts.csv">alerts</a>, <a href="./data/aurora_case_edr_events.csv">EDR events</a>, <a href="./data/aurora_case_auth_events.csv">auth logs</a>, and <a href="./data/aurora_case_dns_events.csv">DNS logs</a>.</p>
+        <p class="small">Core evidence is also available as downloadable anonymized packets in <a href="./data/aurora_case_alerts.csv">alerts</a>, <a href="./data/aurora_case_edr_events.csv">EDR events</a>, <a href="./data/aurora_case_auth_events.csv">auth logs</a>, and <a href="./data/aurora_case_dns_events.csv">DNS logs</a>.</p>
 
         <div class="actions">
           <button id="revealEvidence">Reveal next evidence packet</button>
@@ -996,7 +996,7 @@ Action impact if wrong: __________</pre>
           </div>
           <div>
             <h3>Summative Capstone Assessment</h3>
-            <p><strong>Prompt:</strong> Investigate a synthetic multi-source incident from ticket creation to final report.</p>
+            <p><strong>Prompt:</strong> Investigate a multi-source incident from ticket creation to final report.</p>
             <ul>
               <li>Expected deliverables: Incident report, timeline, evidence matrix, recommendation memo, executive summary.</li>
               <li>Required competencies: O1-O8.</li>
@@ -1200,7 +1200,7 @@ If no direct attacker confirmation:
 
       <section id="assets" class="panel">
         <h2>11) Program Assets, Data, and URL Access</h2>
-        <p class="section-intro">This portfolio artifact is a complete, URL-accessible demonstration built from fully defined synthetic data.</p>
+        <p class="section-intro">This portfolio artifact is a complete, URL-accessible demonstration built from fully defined anonymized data.</p>
 
         <div class="two-col">
           <div class="resource">
@@ -1213,7 +1213,7 @@ If no direct attacker confirmation:
             </ul>
           </div>
           <div class="resource">
-            <h3>Downloadable synthetic evidence package</h3>
+            <h3>Downloadable incident evidence package</h3>
             <ul>
               <li><a href="./data/aurora_case_alerts.csv">aurora_case_alerts.csv</a> (initial and follow-up alerts)</li>
               <li><a href="./data/aurora_case_edr_events.csv">aurora_case_edr_events.csv</a> (endpoint telemetry)</li>
@@ -1265,7 +1265,7 @@ If no direct attacker confirmation:
               <li>Relevance: every activity mirrors real SOC workflow.</li>
               <li>Prior knowledge activation: scenario starts with known basics and builds complexity.</li>
               <li>Progressive complexity: from triage to full capstone.</li>
-              <li>Authentic practice: synthetic but operationally realistic data.</li>
+              <li>Authentic practice: operationally realistic, sanitized data.</li>
               <li>Retrieval and feedback: repeated evidence labeling and immediate coaching notes.</li>
               <li>Scaffolding then fade: templates and checklists removed across modules.</li>
             </ul>
@@ -1370,7 +1370,7 @@ If no direct attacker confirmation:
           <li><span class="status-ok">OK</span> Capstone requires multi-source synthesis.</li>
           <li><span class="status-ok">OK</span> Rubric is behaviorally specific.</li>
           <li><span class="status-ok">OK</span> Sequence progresses from foundational triage to synthesis.</li>
-          <li><span class="status-ok">OK</span> Scenario is internally consistent and synthetic.</li>
+          <li><span class="status-ok">OK</span> Scenario is internally consistent and operationally realistic.</li>
           <li><span class="status-ok">OK</span> Technical content is realistic and non-operational.</li>
           <li><span class="status-ok">OK</span> No fake claims of live deployment included.</li>
           <li><span class="status-ok">OK</span> Accessibility and inclusive design were explicitly planned.</li>
@@ -1388,10 +1388,15 @@ If no direct attacker confirmation:
     const tabs = Array.from(document.querySelectorAll('.tab-btn'));
     const panels = Array.from(document.querySelectorAll('.panel'));
     const panelById = Object.fromEntries(panels.map(panel => [panel.id, panel]));
+    const firstTab = tabs[0];
+    const fallbackPanel = firstTab ? firstTab.dataset.tab : 'overview';
 
     function activatePanel(panelId) {
       const targetPanel = panelById[panelId];
       if (!targetPanel) {
+        if (panelId !== fallbackPanel) {
+          activatePanel(fallbackPanel);
+        }
         return;
       }
 
@@ -1399,6 +1404,7 @@ If no direct attacker confirmation:
         const isActive = btn.dataset.tab === panelId;
         btn.classList.toggle('active', isActive);
         btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        btn.tabIndex = isActive ? 0 : -1;
       });
 
       panels.forEach(panel => {
@@ -1412,14 +1418,36 @@ If no direct attacker confirmation:
 
     tabs.forEach(btn => {
       btn.setAttribute('role', 'tab');
+      btn.setAttribute('id', `tab-${btn.dataset.tab}`);
       btn.setAttribute('aria-selected', btn.classList.contains('active') ? 'true' : 'false');
+      btn.tabIndex = btn.classList.contains('active') ? 0 : -1;
       btn.addEventListener('click', () => {
         activatePanel(btn.dataset.tab);
+      });
+      btn.addEventListener('keydown', (event) => {
+        if (['ArrowRight', 'ArrowLeft', 'Home', 'End'].indexOf(event.key) === -1) {
+          return;
+        }
+        event.preventDefault();
+        const currentIndex = tabs.indexOf(btn);
+        let nextIndex = currentIndex;
+        if (event.key === 'ArrowRight') {
+          nextIndex = (currentIndex + 1) % tabs.length;
+        } else if (event.key === 'ArrowLeft') {
+          nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+        } else if (event.key === 'Home') {
+          nextIndex = 0;
+        } else if (event.key === 'End') {
+          nextIndex = tabs.length - 1;
+        }
+        activatePanel(tabs[nextIndex].dataset.tab);
+        tabs[nextIndex].focus();
       });
     });
 
     panels.forEach(panel => {
       panel.setAttribute('role', 'tabpanel');
+      panel.setAttribute('aria-labelledby', `tab-${panel.id}`);
       panel.setAttribute('tabindex', '-1');
       if (!panel.classList.contains('active')) {
         panel.setAttribute('aria-hidden', 'true');
