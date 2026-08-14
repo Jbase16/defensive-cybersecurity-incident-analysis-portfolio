@@ -1,0 +1,7 @@
+time,host,user,dns_query,resolved_ip,response_code,query_type,ttl_seconds,rrtype,anomaly_tag
+2026-08-10T02:13:40Z,AUR-WS-117,svc_maint,api-storage.top,198.51.100.200,NOERROR,A,60,A,LowPrevalenceTLD
+2026-08-10T02:14:07Z,AUR-WS-117,svc_maint,objects-sync.io,198.51.100.201,NOERROR,A,120,A,UnknownProvider
+2026-08-10T02:14:21Z,AUR-WS-117,svc_maint,api-storage.top,203.0.113.55,NOERROR,A,60,A,RequeryBurst
+2026-08-10T02:23:41Z,AUR-FILE-01,svc_maint,pasteboard.io,203.0.113.70,NOERROR,CNAME,300,CNAME,LowPrevalenceDomain
+2026-08-10T02:23:48Z,AUR-FILE-01,svc_maint,cdn-verify.top,198.51.100.250,NOERROR,A,120,A,UntrustedDomainFamily
+2026-08-10T02:24:01Z,AUR-FILE-01,svc_maint,corp-tsk-update.aurora,10.30.12.11,NOERROR,A,600,A,InternalReference
