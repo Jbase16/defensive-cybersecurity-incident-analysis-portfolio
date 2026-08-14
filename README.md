@@ -4,6 +4,9 @@ This folder is a complete demonstration artifact for a full training-program bui
 
 ## Access this as a URL
 
+- Public URL (ready to share):
+  - `https://jbase16.github.io/defensive-cybersecurity-incident-analysis-portfolio/`
+
 - File URL (desktop-local):
   - `file:///Users/jason/Daybreak/portfolio-defensive-cybersecurity-incident-analysis/index.html`
 
@@ -20,7 +23,7 @@ Then open:
 ### Optional alternate hosting
 
 - The same static page can be uploaded to Google Docs as a portfolio note, or to any
-  static host (GitHub Pages/Cloudflare Pages/other) without changing content structure.
+  static host (Cloudflare Pages/Netlify/other) without changing content structure.
 
 ## Program data assets
 
