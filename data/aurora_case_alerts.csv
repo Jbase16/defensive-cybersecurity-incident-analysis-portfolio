@@ -1,0 +1,6 @@
+case_id,timestamp_utc,alert_id,source,host,user,rule_name,priority,details
+AURORA-IR-2026-01,2026-08-10T02:13:12Z,SE-PS-1129,EDR,AUR-WS-117,svc_maint,Encoded PowerShell Child Process,High,"commandline includes Base64 content with non-standard character count and child proc chain"
+AURORA-IR-2026-01,2026-08-10T02:15:03Z,AUTH-RA-0087,Identity,AD-AUTH,None,Off-hours service login,Medium,"service account login from unusual network / subnet"
+AURORA-IR-2026-01,2026-08-10T02:18:44Z,NET-DNS-553,Network,DNS Sensor,Resolver,Unusual domain pattern,Medium,"repeated low-frequency DNS queries to storage.top and syncer.io"
+AURORA-IR-2026-01,2026-08-10T02:23:30Z,PROC-CHA-441,Endpoint,AUR-FILE-01,svc_maint,Abnormal scheduled task creation,High,"New task created with rundll32 payload and no approved software update parent"
+AURORA-IR-2026-01,2026-08-10T02:29:10Z,SIEM-ANOM-204,SIEM,SIEM,None,Endpoint-Auth mismatch pattern,Medium,"Potential account context mismatch with process owner and workstation activity"
