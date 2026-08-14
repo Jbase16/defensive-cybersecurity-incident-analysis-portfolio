@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Defensive Cybersecurity Incident Analysis Portfolio Artifact</title>
+  <style>
+    :root {
+      --bg: #f6f8fc;
+      --surface: #ffffff;
+      --surface-soft: #edf2ff;
+      --text: #12223a;
+      --muted: #4b5b72;
+      --accent: #2f5be7;
+      --accent-2: #1848d4;
+      --ok: #1b9a57;
+      --warn: #8f5d00;
+      --bad: #b42318;
+      --border: #d2d9e8;
+      --code: #0e172a;
+      --max-width: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", "Avenir Next", "Arial", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.45;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      background: #fff;
+      padding: 0.5rem 1rem;
+      z-index: 1000;
+      border: 2px solid var(--accent);
+      border-radius: 4px;
+    }
+
+    .skip-link:focus {
+      left: 0.5rem;
+      top: 0.5rem;
+    }
+
+    .app-shell {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #f8fbff 0%, #eef2ff 45%, #ebf5ff 100%);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+    }
+
+    .hero h1 {
+      margin: 0 0 0.5rem;
+      font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .snapshot {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .snapshot .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.75rem;
+    }
+
+    .snapshot .label {
+      color: var(--muted);
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .snapshot .value {
+      font-weight: 700;
+      margin-top: 0.25rem;
+      color: var(--text);
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tab-btn {
+      border: 1px solid transparent;
+      padding: 0.65rem 0.8rem;
+      border-radius: 999px;
+      background: #f3f6ff;
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .tab-btn:hover,
+    .tab-btn:focus-visible {
+      border-color: var(--accent);
+      outline: none;
+    }
+
+    .tab-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .content {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.2rem;
+      min-height: 66vh;
+    }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+      animation: fadein 180ms ease-out;
+    }
+
+    @keyframes fadein {
+      from {opacity: 0; transform: translateY(8px);} 
+      to {opacity: 1; transform: translateY(0);} 
+    }
+
+    h2 {
+      margin: 0 0 0.7rem;
+      font-size: 1.35rem;
+    }
+
+    h3 {
+      margin-top: 1.4rem;
+      margin-bottom: 0.3rem;
+      font-size: 1.1rem;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .panel p {
+      max-width: 78ch;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 0.75rem 0 1.3rem;
+      font-size: 0.96rem;
+      overflow: auto;
+      display: block;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.6rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--surface-soft);
+      position: sticky;
+      top: 0;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .module-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.9rem;
+      background: var(--surface);
+      position: relative;
+    }
+
+    .module-card::before {
+      content: '';
+      width: 4px;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      border-radius: 12px 0 0 12px;
+      background: var(--accent);
+    }
+
+    .timeline {
+      margin-top: 1rem;
+      border-left: 3px solid #dbe4ff;
+      padding-left: 1rem;
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .timeline-step {
+      background: #fbfcff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.7rem;
+    }
+
+    .timeline-step .deps {
+      margin: 0.45rem 0;
+      font-weight: 600;
+      color: var(--accent-2);
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.9rem;
+      background: var(--surface-soft);
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent-2);
+      padding: 0.7rem;
+      margin: 1rem 0;
+      background: #f3f6ff;
+      border-radius: 8px;
+    }
+
+    .good {
+      border-left-color: var(--ok);
+      background: #f3fcf5;
+    }
+
+    .warn {
+      border-left-color: var(--warn);
+      background: #fff4e1;
+    }
+
+    .bad {
+      border-left-color: var(--bad);
+      background: #fff2f1;
+    }
+
+    button {
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #fff;
+      border-radius: 8px;
+      padding: 0.55rem 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: #fff;
+      color: var(--accent);
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.7rem 0;
+    }
+
+    .feedback {
+      margin-top: 0.7rem;
+      padding: 0.65rem;
+      border-radius: 8px;
+      background: #eef4ff;
+      border: 1px solid var(--border);
+      white-space: pre-wrap;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      margin-right: 0.35rem;
+      margin-bottom: 0.35rem;
+      font-size: 0.82rem;
+    }
+
+    .grid-kpi {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.6rem;
+      margin: 0.8rem 0;
+    }
+
+    .kpi {
+      background: #f8fbff;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 0.7rem;
+      color: var(--muted);
+    }
+
+    .kpi strong {
+      display: block;
+      font-size: 1.3rem;
+      color: var(--text);
+      margin-top: 0.25rem;
+    }
+
+    .scenario,
+    .quiz-question,
+    .resource,
+    .design-note {
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 0.8rem;
+      margin-bottom: 0.9rem;
+      background: #fcfdff;
+    }
+
+    .scenario-meta {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+
+    @media (min-width: 960px) {
+      .scenario-grid {
+        grid-template-columns: 1.2fr 1fr;
+      }
+    }
+
+    .scenario-grid > div {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.7rem;
+      background: #fff;
+    }
+
+    pre {
+      background: var(--code);
+      color: #e7f1ff;
+      border: 1px solid #24314d;
+      border-radius: 8px;
+      padding: 0.75rem;
+      overflow-x: auto;
+      max-width: 100%;
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+
+    textarea,
+    input,
+    select {
+      width: 100%;
+      padding: 0.55rem;
+      border: 1px solid #c5d0ea;
+      border-radius: 8px;
+      font: inherit;
+    }
+
+    label {
+      display: inline-block;
+      margin: 0.2rem 0;
+    }
+
+    .rubric-grid {
+      overflow-x: auto;
+    }
+
+    .rubric-grid table {
+      min-width: 900px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .scorebar {
+      width: 100%;
+      height: 12px;
+      background: #e4ebff;
+      border-radius: 999px;
+      margin-top: 0.4rem;
+    }
+
+    .scorefill {
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #3c87f9, #1550d6);
+      width: 0;
+      transition: width 250ms ease;
+    }
+
+    .accordion {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin: 0.7rem 0;
+      overflow: hidden;
+    }
+
+    .accordion summary {
+      padding: 0.75rem;
+      cursor: pointer;
+      font-weight: 700;
+      background: var(--surface-soft);
+    }
+
+    .accordion div {
+      padding: 0.75rem;
+    }
+
+    .status-list {
+      margin: 0;
+      padding-left: 1.1rem;
+    }
+
+    .status-ok { color: var(--ok); font-weight: 700; }
+    .status-warn { color: var(--warn); font-weight: 700; }
+    .status-bad { color: var(--bad); font-weight: 700; }
+
+    .hidden {
+      display: none;
+    }
+
+    ul, ol { padding-left: 1.1rem; }
+
+    .badge {
+      display: inline-block;
+      background: #e9efff;
+      border: 1px solid #c3d1ff;
+      color: #123;
+      border-radius: 6px;
+      padding: 0.15rem 0.45rem;
+      margin-right: 0.35rem;
+      margin-bottom: 0.35rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .footer {
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#overview">Skip to overview</a>
+  <div class="app-shell">
+    <header class="hero">
+      <h1>Defensive Cybersecurity Incident Analysis</h1>
+      <p>End-to-end training-program build for junior SOC analysts and technical transition learners.</p>
+      <p class="small" style="margin-top: 0.5rem;"><strong>Delivery context:</strong> remote-first, asynchronous, scenario-driven, 8-12 h, evidence-based practical workflow.</p>
+      <section class="snapshot" aria-label="Program snapshot">
+        <div class="card"><div class="label">Audience</div><div class="value">Junior SOC analysts; IT professionals transitioning to cybersecurity</div></div>
+        <div class="card"><div class="label">Duration</div><div class="value">9.5 learning hours</div></div>
+        <div class="card"><div class="label">Modules</div><div class="value">7 modular learning units</div></div>
+        <div class="card"><div class="label">Format</div><div class="value">Remote-first, mostly asynchronous</div></div>
+        <div class="card"><div class="label">Capstone</div><div class="value">Live scenario investigation and incident report</div></div>
+        <div class="card"><div class="label">Primary competencies</div><div class="value">Triage, evidence correlation, hypothesis testing, reporting</div></div>
+      </section>
+    </header>
+
+    <nav aria-label="Primary navigation">
+      <button class="tab-btn active" data-tab="overview">Overview</button>
+      <button class="tab-btn" data-tab="analysis">Analysis</button>
+      <button class="tab-btn" data-tab="objectives">Learning Objectives</button>
+      <button class="tab-btn" data-tab="curriculum">Curriculum</button>
+      <button class="tab-btn" data-tab="module-detail">Module Detail</button>
+      <button class="tab-btn" data-tab="scenario">Scenario</button>
+      <button class="tab-btn" data-tab="assessments">Assessments</button>
+      <button class="tab-btn" data-tab="rubric">Rubric</button>
+      <button class="tab-btn" data-tab="resources">Resources</button>
+      <button class="tab-btn" data-tab="evaluation">Evaluation</button>
+      <button class="tab-btn" data-tab="assets">Assets & Access</button>
+      <button class="tab-btn" data-tab="design-process">Design Process</button>
+    </nav>
+
+    <main class="content">
+      <section id="overview" class="panel active">
+        <h2>Portfolio Overview</h2>
+        <p class="section-intro">This artifact demonstrates an end-to-end instructional architecture from needs analysis to evaluation and iteration. It is designed as a reviewable demonstration of actual Training & Development practice: measurable outcomes, explicit instruction-to-assessment alignment, realistic professional scenarios, defensible scoring, and clear revision planning.</p>
+
+        <div class="two-col">
+          <div class="card">
+            <h3>What a reviewer should see in 60 seconds</h3>
+            <ul>
+              <li>Clear training need and gap analysis tied to SOC performance outcomes.</li>
+              <li>Five-to-seven coherent modules with explicit prerequisites and outputs.</li>
+              <li>Objective-to-assessment matrix that confirms every program outcome is taught, practiced, and assessed.</li>
+              <li>Capstone design requiring evidence-based synthesis across multiple data sources.</li>
+              <li>Operational documentation for facilitation, scoring, accessibility, versioning, and improvement cycles.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Program identity</h3>
+            <p><strong>Title:</strong> Defensive Cybersecurity Incident Analysis</p>
+            <p><strong>Audience:</strong> Junior SOC analysts; IT pros entering cybersecurity; technically proficient analysts needing structured incident investigation method.</p>
+            <p><strong>Goal:</strong> Move systematically from signal to defensible incident assessment, with evidence-led reasoning and role-appropriate reporting.</p>
+          </div>
+        </div>
+
+        <div class="callout good">
+          <strong>Quality signal:</strong> This artifact emphasizes process quality over memorization. Most activities use synthetic evidence and require learners to prove how they derived conclusions.
+        </div>
+      </section>
+
+      <section id="analysis" class="panel">
+        <h2>1) Program Analysis</h2>
+
+        <div class="two-col">
+          <div>
+            <h3>Training Need</h3>
+            <p>Organizations report inconsistent incident triage quality, delayed response decisions, and documentation quality variance among junior analysts. Operationally, alerts enter the SOC in volume and analysts often react too quickly to isolated data points, then either over-contain business systems or under-escalate risky activity.</p>
+
+            <h3>Performance Problem</h3>
+            <p>Current analysts can often describe individual artifacts but struggle to transform them into a defensible assessment. The skill gap is in <strong>analysis discipline</strong>: separating fact from interpretation, correlating evidence across event sources, and making decision-justified recommendations.</p>
+          </div>
+          <div>
+            <h3>Environmental Constraints</h3>
+            <ul>
+              <li>Remote workforce, shift overlap only during two weekday windows.</li>
+              <li>Asynchronous consumption preferred; synchronous support must be limited.</li>
+              <li>Tool availability varies by team: Splunk-like SIEM, endpoint telemetry, and identity logs.</li>
+              <li>Low tolerance for excessive theoretical depth; must prioritize operational utility.</li>
+            </ul>
+
+            <h3>Assumptions</h3>
+            <ul>
+              <li>Learners can read JSON/CSV logs and basic PowerShell command strings.</li>
+              <li>All scenarios are synthetic and non-operationally sensitive.</li>
+              <li>Stakeholders accept an evidence-grade scale and risk-based escalation path.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Audience and Entry Characteristics</h3>
+        <div class="two-col">
+          <div class="card">
+            <strong>Learner personas</strong>
+            <ul>
+              <li><strong>Nora, SOC Associate:</strong> performs triage, little exposure to full lifecycle analysis.</li>
+              <li><strong>Isaac, IT Ops Specialist:</strong> strong system knowledge, weak cyber investigation method.</li>
+              <li><strong>Leah, Helpdesk Tech:</strong> strong logging troubleshooting background, wants structured escalation decisions.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <strong>Entry Knowledge / Prerequisites</strong>
+            <ul>
+              <li>TCP/IP basics, OS process model, authentication concepts.</li>
+              <li>Ability to read a timestamp and actor, host, account fields.</li>
+              <li>Prerequisite microlearning: SIEM search basics and security vocabulary.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div>
+            <h3>Expected Post-Training Performance</h3>
+            <ul>
+              <li>Reduce “time-to-first-valid-hypothesis” by 25% in practice simulations.</li>
+              <li>Use standardized evidence taxonomy in 100% of incident notes.</li>
+              <li>Produce incident narratives with explicit confidence levels and evidence traceability.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Out-of-Scope Competencies</h3>
+            <ul>
+              <li>Deep malware reverse-engineering.</li>
+              <li>Network packet-level forensics at deep protocol level.</li>
+              <li>Advanced SOC platform-specific admin training.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">This performance gap is best addressed by training because it is behavioral-methodological, not purely tooling. The intervention targets decision quality and reasoning structure that can be observed and assessed before tool proficiency alone can solve it.</div>
+      </section>
+
+      <section id="objectives" class="panel">
+        <h2>2) Learning Objectives (Measurable, Behavior-Focused)</h2>
+        <p class="section-intro">Program-level objectives are written with explicit behavior, condition, criterion, complexity level, and assessment method.</p>
+
+        <div class="rubric-grid">
+          <table>
+            <thead>
+              <tr>
+                <th>Objective ID</th>
+                <th>Observable behavior</th>
+                <th>Condition</th>
+                <th>Standard</th>
+                <th>Cognitive level</th>
+                <th>Assessment method</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>O1</strong></td>
+                <td>Triage an incoming incident signal and assign urgency/priority with rationale.</td>
+                <td>Given alert metadata, business criticality, and impact indicators.</td>
+                <td>Correct priority assignment in at least 4/5 cases.</td>
+                <td>Analyze / Evaluate</td>
+                <td>Scenario triage exercise + checkpoint rubric.</td>
+              </tr>
+              <tr>
+                <td><strong>O2</strong></td>
+                <td>Identify relevant artifacts and extract factual observations from endpoint, SIEM, authentication, and DNS sources.</td>
+                <td>During guided artifact review with mixed noise and signal.</td>
+                <td>At least 90% correct classification of mandatory artifacts.</td>
+                <td>Apply / Analyze</td>
+                <td>Artifact interpretation lab + checks.</td>
+              </tr>
+              <tr>
+                <td><strong>O3</strong></td>
+                <td>Separate direct observations, inferences, hypotheses, and conclusions in incident notes.</td>
+                <td>When completing analysis notebooks for two progressive scenarios.</td>
+                <td>Zero unsupported conclusions and complete tagging of each statement.</td>
+                <td>Analyze / Evaluate</td>
+                <td>Knowledge checks and facilitator audit of notebooks.</td>
+              </tr>
+              <tr>
+                <td><strong>O4</strong></td>
+                <td>Correlate evidence across sources to build a timeline of likely attacker activity.</td>
+                <td>Given a time-series packet of events with uncertain timestamps.</td>
+                <td>Timeline includes ordered events, confidence, and uncertainty notes.</td>
+                <td>Analyze / Create</td>
+                <td>Timeline exercise + capstone artifact review.</td>
+              </tr>
+              <tr>
+                <td><strong>O5</strong></td>
+                <td>Evaluate competing explanations and choose the most probable one.</td>
+                <td>When provided with competing hypotheses and same evidence set.</td>
+                <td>Select hypothesis with strongest support and identify 2+ disconfirming findings.</td>
+                <td>Evaluate</td>
+                <td>Hypothesis validation quiz and module activities.</td>
+              </tr>
+              <tr>
+                <td><strong>O6</strong></td>
+                <td>Recommend containment/remediation actions with rationale and risk tradeoff.</td>
+                <td>Given an incident classification and dependency map.</td>
+                <td>Actions ranked by severity and reversibility; at least one monitored containment first.</td>
+                <td>Evaluate</td>
+                <td>Case simulation and facilitator scored scenario.</td>
+              </tr>
+              <tr>
+                <td><strong>O7</strong></td>
+                <td>Document findings using a reproducible incident reporting format.</td>
+                <td>For a full capstone case.</td>
+                <td>Report includes evidence matrix, timeline, hypothesis status, and communication products.</td>
+                <td>Create</td>
+                <td>Capstone report submission.</td>
+              </tr>
+              <tr>
+                <td><strong>O8</strong></td>
+                <td>Communicate findings to technical and nontechnical stakeholders with role-appropriate summaries.</td>
+                <td>In a written brief and handoff note for leadership and engineering.</td>
+                <td>Both artifacts are clear, non-defensive, and match audience needs.</td>
+                <td>Analyze / Create</td>
+                <td>Capstone communication deliverables + rubric criterion.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout">
+          <strong>Alignment check:</strong> All outcomes emphasize analysis, evidence interpretation, and decision-making. No objective is memorization-only.
+        </div>
+      </section>
+
+      <section id="curriculum" class="panel">
+        <h2>3) Curriculum Architecture (7 Modules, 9.5 Hours)</h2>
+        <p class="section-intro">The sequence intentionally moves from triage framing and analytical habits into interpretation, synthesis, operational action, and communication.</p>
+
+        <div class="timeline">
+          <div class="timeline-step">
+            <h3>Module 1: Investigative Mindset and Incident Triage (1.0h)</h3>
+            <p class="deps">Required: security baseline microlearning</p>
+            <ul>
+              <li>Purpose: anchor role expectations and triage discipline.</li>
+              <li>Core concepts: signal vs. noise, urgency ladders, evidence-first notes.</li>
+              <li>Practice: 12 synthetic triage cases with confidence labels.</li>
+              <li>Assessment: scenario triage quiz + facilitator calibration.</li>
+              <li>Output: triage decisions with rationale and escalation path.</li>
+            </ul>
+          </div>
+          <div class="timeline-step">
+            <h3>Module 2: Security Artifacts and Data Literacy (1.4h)</h3>
+            <p class="deps">Prereq: Module 1</p>
+            <ul>
+              <li>Purpose: build speed at spotting high-value artifacts.</li>
+              <li>Core concepts: endpoint telemetry, auth logs, DNS/network metadata, process trees.</li>
+              <li>Practice: sandboxed artifact interpretation with distractors.</li>
+              <li>Assessment: artifact classification exercise.</li>
+              <li>Output: evidence extraction worksheet mapped to O2.</li>
+            </ul>
+          </div>
+          <div class="timeline-step">
+            <h3>Module 3: Timeline Construction and Correlation (1.3h)</h3>
+            <p class="deps">Prereq: Modules 1-2</p>
+            <ul>
+              <li>Purpose: enable temporal reasoning across sources.</li>
+              <li>Core concepts: event normalization, confidence tags, ambiguity windows.</li>
+              <li>Practice: create timeline for progressive incident packet.</li>
+              <li>Assessment: timeline quality review using rubric.</li>
+              <li>Output: annotated timeline with gaps and request list.</li>
+            </ul>
+          </div>
+          <div class="timeline-step">
+            <h3>Module 4: Hypothesis Development and Validation (1.8h)</h3>
+            <p class="deps">Prereq: Modules 1-3</p>
+            <ul>
+              <li>Purpose: improve structured thinking under uncertainty.</li>
+              <li>Core concepts: hypothesis matrix, competing explanations, evidence for/against.</li>
+              <li>Practice: branching scenario with ambiguous indicators.</li>
+              <li>Assessment: structured short response and peer review.</li>
+              <li>Output: hypothesis grid and next-evidence request plan.</li>
+            </ul>
+          </div>
+          <div class="timeline-step">
+            <h3>Module 5: Containment and Remediation Decisions (1.2h)</h3>
+            <p class="deps">Prereq: Modules 1-4</p>
+            <ul>
+              <li>Purpose: balance speed, evidence, and operational impact.</li>
+              <li>Core concepts: blast radius, least-disruptive control, rollback and telemetry continuity.</li>
+              <li>Practice: action ranking simulation.</li>
+              <li>Assessment: short scenario with best-practice sequencing.</li>
+              <li>Output: decision memo with risk ranking and contingencies.</li>
+            </ul>
+          </div>
+          <div class="timeline-step">
+            <h3>Module 6: Documentation and Communication (1.4h)</h3>
+            <p class="deps">Prereq: Modules 1-5</p>
+            <ul>
+              <li>Purpose: produce reproducible, auditable reporting.</li>
+              <li>Core concepts: executive brief, technical annex, evidence traceability.</li>
+              <li>Practice: incident report drafting with role-tailored version.</li>
+              <li>Assessment: formative peer/SME review.
+              </li>
+              <li>Output: report + two stakeholder-facing communications.</li>
+            </ul>
+          </div>
+          <div class="timeline-step">
+            <h3>Module 7: Capstone Investigation (1.4h)</h3>
+            <p class="deps">Prereq: Modules 1-6</p>
+            <ul>
+              <li>Purpose: assess transfer and integration of all objectives.</li>
+              <li>Core concepts: full-cycle investigation and defensible synthesis.</li>
+              <li>Practice: progressive scenario with unknowns and ambiguity.</li>
+              <li>Assessment: capstone analytic portfolio submission.</li>
+              <li>Output: final report, timeline, evidence matrix, recommendations.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Objective-to-Module Alignment Snapshot</h3>
+        <div class="rubric-grid">
+          <table>
+            <thead>
+              <tr>
+                <th>Program Objective</th>
+                <th>Primary module(s)</th>
+                <th>Assessment activity</th>
+                <th>Evidence of mastery</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>O1</td><td>M1, M7</td><td>Triage simulation + capstone preamble</td><td>Priority and escalation decisions meet rubric threshold.</td></tr>
+              <tr><td>O2</td><td>M2, M3, M7</td><td>Artifact extraction task + scenario evidence checks</td><td>Evidence map includes required artifacts with correct source citations.</td></tr>
+              <tr><td>O3</td><td>M3, M4, M6, M7</td><td>Notebook audit</td><td>No unsupported statements; assumptions are labeled.</td></tr>
+              <tr><td>O4</td><td>M3, M7</td><td>Timeline build</td><td>Chronology, confidence tags, and unknowns documented.</td></tr>
+              <tr><td>O5</td><td>M4, M7</td><td>Hypothesis matrix with refutation plan</td><td>Selected hypothesis has most supporting evidence and named disconfirmers.</td></tr>
+              <tr><td>O6</td><td>M5, M7</td><td>Action-ranking simulation</td><td>First actions prioritize containment and reversibility where possible.</td></tr>
+              <tr><td>O7</td><td>M6, M7</td><td>Capstone report format checklist</td><td>All mandatory sections completed and traceable.</td></tr>
+              <tr><td>O8</td><td>M6, M7</td><td>Dual-audience communication task</td><td>Technical and nontechnical versions satisfy audience-specific clarity criteria.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout warn">
+          <strong>Gap correction:</strong> Initial draft had O8 under-assessed with only one audience document. It was corrected by requiring both technical and executive-style summaries for all capstone submissions.</div>
+      </section>
+
+      <section id="module-detail" class="panel">
+        <h2>4) Detailed Module Example: Module 4 - Hypothesis Development and Validation</h2>
+
+        <div class="grid-kpi">
+          <div class="kpi">Duration<strong>1.8 hours</strong></div>
+          <div class="kpi">Outcome targets<strong>O3, O4, O5</strong></div>
+          <div class="kpi">Format<strong>Asynchronous + optional coach clinic</strong></div>
+          <div class="kpi">Prereq<strong>Modules 1-3 artifacts completed</strong></div>
+        </div>
+
+        <h3>Module Introduction</h3>
+        <p>Analysts usually jump to a conclusion after first suspicious signal. This module teaches a disciplined “claim and test” approach that preserves uncertainty while still guiding action. Learners are trained to convert observations into explicit hypotheses and to validate those hypotheses through further evidence requests.</p>
+
+        <h3>Learning Objectives (Module)</h3>
+        <ul>
+          <li>Generate at least three competing hypotheses from one incident packet.</li>
+          <li>For each hypothesis, cite 2 evidence items that support it and 1 that challenges it.</li>
+          <li>Propose the minimum next evidence needed to increase confidence to “likely” or “high likelihood.”</li>
+          <li>Update confidence scores when new evidence appears.</li>
+        </ul>
+
+        <h3>Lesson Sequence</h3>
+        <ol>
+          <li>Micro-lesson on cognitive biases in investigations (30 min).</li>
+          <li>Artifact unpacking: ambiguous event packet (45 min).</li>
+          <li>Modeling exercise: facilitator demonstrates hypothesis matrix (15 min video).</li>
+          <li>Guided practice with scaffolded prompts (20 min).</li>
+          <li>Independent practice with branching outcomes (25 min).</li>
+          <li>Reflection and knowledge check (10 min).</li>
+        </ol>
+
+        <h3>Instructional Content (Condensed)</h3>
+        <div class="two-col">
+          <div class="card">
+            <strong>Key principle:</strong> Do not treat “evidence” as a single label. Evidence has strength.
+            <ul>
+              <li><strong>Strong:</strong> same actor + same host + timestamp-aligned telemetry.</li>
+              <li><strong>Moderate:</strong> correlative indicators with one gap.</li>
+              <li><strong>Weak:</strong> single source with no corroboration.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <strong>Template used in activity:</strong>
+            <pre>Observation: __________
+Confidence: High/Medium/Low
+Hypothesis supported? [A/B/C]
+Against evidence: __________
+Next evidence needed: __________
+Action impact if wrong: __________</pre>
+          </div>
+        </div>
+
+        <h3>Guided Practice</h3>
+        <div class="scenario">
+          <p><strong>Prompt:</strong> “At 09:13 UTC, host HST-42 alerts on encoded PowerShell launch from a service account. DNS shows repeated .top and cloud storage lookups. No ransomware indicators yet.”</p>
+          <ul>
+            <li>Step 1: Generate three hypotheses.</li>
+            <li>Step 2: Add initial evidence tags and support/challenge rows.</li>
+            <li>Step 3: Propose which evidence to request first and why.</li>
+          </ul>
+          <p><strong>Expected guidance:</strong> Learner should identify at least one high-confidence false-positive possibility early and keep multiple paths open.</p>
+        </div>
+
+        <h3>Independent Practice</h3>
+        <p>Use a second evidence packet where command-line and authentication metadata conflict. Learners must revise their earlier hypothesis scores and provide a short rationale for score change.</p>
+
+        <h3>Knowledge Checks</h3>
+        <ul>
+          <li>Which of these is a hypothesis vs a fact?</li>
+          <li>Which evidence, if true, most strongly falsifies “scripted admin activity”?</li>
+          <li>What is the next-best evidence request, and why?</li>
+        </ul>
+
+        <h3>Scenario-Based Activity</h3>
+        <p>Case packet includes contradictory user-context signals and off-hours auth failures. Learners produce a hypothesis matrix, confidence trajectory, and action plan to avoid over-isolation while preserving defensible posture.</p>
+
+        <h3>Feedback Design</h3>
+        <ul>
+          <li>Automated hints after each unsupported inference.</li>
+          <li>Model answer with rationale for why distractor hypotheses are weak.</li>
+          <li>Instructor comments focus on thought process, not just final guess.</li>
+        </ul>
+
+        <h3>Facilitator Guidance</h3>
+        <div class="accordion">
+          <details>
+            <summary>Coaching script for common branches</summary>
+            <p>When learners anchor on first hypothesis, prompt: “What data specifically would prove this is wrong?”</p>
+            <p>When learners produce too many hypotheses, ask for ranking by likelihood and decision consequence.</p>
+          </details>
+          <details>
+            <summary>Common struggle patterns</summary>
+            <p>Confusing temporal order for causality, overconfidence after one corroboration, skipping “unknowns” section in timeline.</p>
+          </details>
+        </div>
+
+        <h3>Completion Criteria</h3>
+        <ul>
+          <li>Three hypotheses submitted, each with at least one supporting and one contradictory evidence item.</li>
+          <li>At least one uncertainty note and one follow-up evidence request per hypothesis.</li>
+          <li>Module score at least 80% on rubric-defined practice criteria.</li>
+          <li>Peer feedback completed for independent practice artifact.</li>
+        </ul>
+      </section>
+
+      <section id="scenario" class="panel">
+        <h2>5) Scenario-Based Learning: Aurora Financial Incident</h2>
+        <p class="section-intro">A fictional and sanitized case designed to test analytical discipline. The learner is repeatedly exposed to incomplete and ambiguous evidence.</p>
+        <div class="callout">
+          <strong>Case context:</strong> Aurora Financial, a 3200-user SaaS provider, receives a SOC alert at 02:13 UTC on workstation <code>AZR-WS-117</code> indicating suspicious PowerShell execution. Initial evidence is ambiguous.</div>
+        <p class="small">Core evidence is also available as downloadable synthetic packets in <a href="./data/aurora_case_alerts.csv">alerts</a>, <a href="./data/aurora_case_edr_events.csv">EDR events</a>, <a href="./data/aurora_case_auth_events.csv">auth logs</a>, and <a href="./data/aurora_case_dns_events.csv">DNS logs</a>.</p>
+
+        <div class="actions">
+          <button id="revealEvidence">Reveal next evidence packet</button>
+          <button id="resetScenario" class="secondary">Reset scenario</button>
+          <button id="scoreScenario" class="secondary">Submit reasoning for review</button>
+        </div>
+
+        <div id="scenarioLog" class="scenario" aria-live="polite" aria-relevant="additions"></div>
+        <div id="scenarioFeedback" class="feedback hidden" role="status"></div>
+
+        <h3>What the learner is asked to classify</h3>
+        <ul>
+          <li>What is directly known?</li>
+          <li>What is inferred?</li>
+          <li>What remains unknown?</li>
+          <li>Which evidence is currently highest priority to request next?</li>
+          <li>How confident is each hypothesis?</li>
+        </ul>
+
+        <h3>Scenario progression logic</h3>
+        <div class="scenario-grid" id="stageTemplate" style="display:none;" aria-hidden="true"></div>
+      </section>
+
+      <section id="assessments" class="panel">
+        <h2>6) Assessments</h2>
+
+        <div class="two-col">
+          <div>
+            <h3>Formative Strategy</h3>
+            <ul>
+              <li><strong>Knowledge checks:</strong> per module, 4-6 low-stakes prompts.</li>
+              <li><strong>Artifact interpretation drills:</strong> classify logs/fields and flag unsupported claims.</li>
+              <li><strong>Short scenarios:</strong> micro cases with branching responses.</li>
+              <li><strong>Evidence-vs-inference labeling:</strong> practice using learner notebooks.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Summative Capstone Assessment</h3>
+            <p><strong>Prompt:</strong> Investigate a synthetic multi-source incident from ticket creation to final report.</p>
+            <ul>
+              <li>Expected deliverables: Incident report, timeline, evidence matrix, recommendation memo, executive summary.</li>
+              <li>Required competencies: O1-O8.</li>
+              <li>Passing standard: at least <strong>85%</strong> rubric score and no critical fails (unsupported conclusion, missing escalation rationale).</li>
+              <li>Remediation/retry: learners may rework one section in each of report, reasoning, and remediation ranking within one business day after targeted coaching.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">Assessment mix avoids recall-heavy multiple-choice dependence. Every graded artifact has an analysis requirement and an evidence trail requirement.</div>
+
+        <h3>Sample Quiz / Knowledge Checks (8 items)</h3>
+        <div id="quizContainer"></div>
+        <div class="actions">
+          <button id="gradeQuiz">Grade sample assessment</button>
+          <button id="resetQuiz" class="secondary">Reset</button>
+        </div>
+        <div class="feedback" id="quizFeedback" role="status" aria-live="polite"></div>
+        <div class="scorebar" aria-hidden="true"><div id="quizScoreFill" class="scorefill"></div></div>
+      </section>
+
+      <section id="rubric" class="panel">
+        <h2>7) Capstone Rubric</h2>
+        <p class="section-intro">Analytic rubric used by SMEs, calibrated prior to scoring with anchor examples.</p>
+        <div class="rubric-grid">
+          <table>
+            <thead>
+              <tr>
+                <th>Dimension</th>
+                <th>Novice</th>
+                <th>Developing</th>
+                <th>Proficient</th>
+                <th>Advanced</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Evidence identification</td>
+                <td>Captures few artifacts; misses source type.</td>
+                <td>Captures several artifacts but with gaps or mislabeling.</td>
+                <td>Captures required artifacts from all relevant sources with source tags.</td>
+                <td>Builds a complete evidence inventory and prioritizes by relevance.</td>
+              </tr>
+              <tr>
+                <td>Evidence interpretation</td>
+                <td>Literal restatement with many unsupported deductions.</td>
+                <td>Some interpretation but not tied to confidence.</td>
+                <td>Interprets artifacts with appropriate confidence and caveats.</td>
+                <td>Clearly explains why each interpretation is warranted and what could invalidate it.</td>
+              </tr>
+              <tr>
+                <td>Analytical reasoning</td>
+                <td>Jumps to conclusions and ignores contradictions.</td>
+                <td>Considers alternatives but not consistently.</td>
+                <td>Maintains competing explanations and updates as evidence changes.</td>
+                <td>Consistently applies explicit reasoning chain and uncertainty handling.</td>
+              </tr>
+              <tr>
+                <td>Hypothesis quality</td>
+                <td>Only one hypothesis, no test plan.</td>
+                <td>Multiple hypotheses without evidence mapping.</td>
+                <td>Multiple hypotheses with support and disconfirming items.</td>
+                <td>Prioritizes hypotheses with rationale and confidence transitions.</td>
+              </tr>
+              <tr>
+                <td>Timeline reconstruction</td>
+                <td>Chronology is incomplete or inaccurate.</td>
+                <td>Chronology exists but misses causality uncertainty.</td>
+                <td>Ordered timeline includes unknowns and confidence markers.</td>
+                <td>Timeline explains branching paths and indicates decision points clearly.</td>
+              </tr>
+              <tr>
+                <td>Risk prioritization</td>
+                <td>Recommendations are generic.</td>
+                <td>Some ranking but ignores operational impact.</td>
+                <td>Action ranking reflects blast radius, urgency, and reversibility.</td>
+                <td>Provides phased strategy with escalation and monitoring checkpoints.</td>
+              </tr>
+              <tr>
+                <td>Recommended actions</td>
+                <td>Contains unsafe or missing containment guardrails.</td>
+                <td>Actions are present but not sequenced.</td>
+                <td>Actions include immediate containment and evidence-preservation first.</td>
+                <td>Action set is practical, low-collision, and includes follow-up validation.
+                </td>
+              </tr>
+              <tr>
+                <td>Technical accuracy</td>
+                <td>Major factual inaccuracies in terminology or platform behavior.</td>
+                <td>Some inaccuracies; generally understandable.</td>
+                <td>Terminology and procedural logic are correct.</td>
+                <td>Clear, precise, and operationally valid use of domain terms.</td>
+              </tr>
+              <tr>
+                <td>Documentation quality</td>
+                <td>Missing required sections and unclear formatting.</td>
+                <td>All required sections present but inconsistent tracing.</td>
+                <td>Complete template use with source links and evidence references.</td>
+                <td>Consistent, concise, audit-ready report quality.</td>
+              </tr>
+              <tr>
+                <td>Communication clarity</td>
+                <td>Audience mismatch and jargon-heavy writing.</td>
+                <td>Clear for one audience, weak for the other.</td>
+                <td>Both technical and executive artifacts are understandable.</td>
+                <td>Both artifacts are persuasive, prioritized, and decision-ready.</td>
+              </tr>
+              <tr>
+                <td>Confidence calibration</td>
+                <td>No confidence labeling, overconfident conclusions.</td>
+                <td>Some labels exist but inconsistent.</td>
+                <td>Confidence labels are present and mostly matched to evidence strength.</td>
+                <td>Calibration is nuanced, explicit, and improves with each evidence packet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid-kpi">
+          <div class="kpi">Total score levels<strong>0-110</strong></div>
+          <div class="kpi">Passing threshold<strong>94 / 110 (85%)</strong></div>
+          <div class="kpi">Critical fail triggers<strong>Any 0 on evidence/accuracy dimensions</strong></div>
+        </div>
+      </section>
+
+      <section id="resources" class="panel">
+        <h2>8) Learner Resources</h2>
+        <div class="two-col">
+          <div class="resource">
+            <h3>Incident Investigation Checklist</h3>
+<pre>1) Capture timestamp, host, source, and user context.
+2) Tag evidence: observed, inferred, assumed.
+3) Check authentication, process, DNS, endpoint, and network data.
+4) Identify unknowns before conclusions.
+5) Create at least 3 hypotheses.
+6) For each hypothesis: record support and contradiction.
+7) Request one minimal highest-value missing dataset.
+8) Recommend containment with blast-radius check.
+9) Write executive and technical outputs.
+10) Add confidence labels to every conclusion.</pre>
+          </div>
+          <div class="resource">
+            <h3>Evidence Classification Reference</h3>
+<pre>Observed:
+- Event recorded in tool output.
+- Timestamp and field values as stored in logs.
+
+Inferred:
+- Reasoned from multiple observations.
+- Must include logic chain (what is combined and why).
+
+Hypothesis:
+- Candidate explanation requiring additional confirmation.
+- Must be falsifiable and ranked.</pre>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="resource">
+            <h3>Incident Timeline Template</h3>
+<pre>Time (UTC) | Source | Fact observed | Confidence | Why it matters | Unknowns</pre>
+          </div>
+          <div class="resource">
+            <h3>Analyst Note Template</h3>
+<pre>Event block:
+- What is known?
+- Why this may matter?
+- Evidence confidence:
+- Immediate next step:
+- Open questions:
+- Potential bias risk:</pre>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="resource">
+            <h3>Incident Report Template</h3>
+<pre>1) Incident statement and scope
+2) Initial signal and decision context
+3) Evidence summary with source references
+4) Hypothesis matrix (support/challenge/confidence)
+5) Timeline and dependency map
+6) Recommended containment
+7) Remediation checkpoints
+8) Validation after action
+9) Handoff and communication</pre>
+          </div>
+          <div class="resource">
+            <h3>Quick-Reference Decision Guide</h3>
+<pre>If event is critical and user impact high:
+  start containment with monitoring and safe isolations.
+If ambiguity remains high:
+  preserve evidence; escalate with confidence label.
+If no direct attacker confirmation:
+> avoid “confirmed compromise” language.</pre>
+          </div>
+        </div>
+
+        <div class="callout">All resources are designed as reusable templates and can be versioned per team tooling or log schema.</div>
+      </section>
+
+      <section id="assets" class="panel">
+        <h2>11) Program Assets, Data, and URL Access</h2>
+        <p class="section-intro">This portfolio artifact is a complete, URL-accessible demonstration built from fully defined synthetic data.</p>
+
+        <div class="two-col">
+          <div class="resource">
+            <h3>Direct URL access</h3>
+            <ul>
+              <li>File URL: <code>file:///Users/jason/Daybreak/portfolio-defensive-cybersecurity-incident-analysis/index.html</code></li>
+              <li>Local URL (recommended): run <code>node /Users/jason/Daybreak/portfolio-defensive-cybersecurity-incident-analysis/serve.mjs</code>, then open <code>http://127.0.0.1:4173/</code>.</li>
+              <li>Deployment-ready structure can be copied to any static host (GitHub Pages, Cloudflare Pages, Netlify, or internal SharePoint) with no build step.</li>
+            </ul>
+          </div>
+          <div class="resource">
+            <h3>Downloadable synthetic evidence package</h3>
+            <ul>
+              <li><a href="./data/aurora_case_alerts.csv">aurora_case_alerts.csv</a> (initial and follow-up alerts)</li>
+              <li><a href="./data/aurora_case_edr_events.csv">aurora_case_edr_events.csv</a> (endpoint telemetry)</li>
+              <li><a href="./data/aurora_case_auth_events.csv">aurora_case_auth_events.csv</a> (identity/activity records)</li>
+              <li><a href="./data/aurora_case_dns_events.csv">aurora_case_dns_events.csv</a> (DNS telemetry)</li>
+              <li><a href="./data/aurora_case_process_tree.json">aurora_case_process_tree.json</a> (parent-child process model)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <strong>Portfolio requirement met:</strong> The scenario and assessment activities are driven by explicit, concrete datasets—not placeholders.
+        </div>
+      </section>
+
+      <section id="evaluation" class="panel">
+        <h2>9) Measurement, Evaluation, and Adult-Learning Design</h2>
+        <div class="two-col">
+          <div>
+            <h3>Measurement and Evaluation Strategy</h3>
+            <ul>
+              <li>Completion metrics: module pass rate, completion latency, repeat attempts.</li>
+              <li>Objective-level performance: scores on each O1-O8 criterion.</li>
+              <li>Item quality: distractor effectiveness and ambiguity balance.</li>
+              <li>Transfer indicators: quality of on-the-job investigation notes in 30-day follow-up.</li>
+              <li>Stakeholder feedback: SME + SOC leadership on report quality and actionability.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Evidence for Improvement Decisions</h3>
+            <ul>
+              <li>Change content when repeated misses cluster on same objective >30% of learners.</li>
+              <li>Revise assessment items when high-ability learners still fail due to unclear wording.</li>
+              <li>Resequence modules when learners cannot synthesize Module 4+5 until after communication practice.</li>
+              <li>Adjust rubric anchors after SME calibration drift appears across two scoring cycles.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <h3>“Liked” vs “Improved performance”</h3>
+            <p><strong>Liked:</strong> high completion rate and positive comments.</p>
+            <p><strong>Proven improvement:</strong> reduced average time-to-confidence, fewer unsupported conclusions, stronger escalation quality in real tickets.</p>
+          </div>
+          <div class="card">
+            <h3>Adult-Learning Design Decisions</h3>
+            <ul>
+              <li>Relevance: every activity mirrors real SOC workflow.</li>
+              <li>Prior knowledge activation: scenario starts with known basics and builds complexity.</li>
+              <li>Progressive complexity: from triage to full capstone.</li>
+              <li>Authentic practice: synthetic but operationally realistic data.</li>
+              <li>Retrieval and feedback: repeated evidence labeling and immediate coaching notes.</li>
+              <li>Scaffolding then fade: templates and checklists removed across modules.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Inclusive and Accessible Design (WCAG 2.2 AA)</h3>
+        <ul>
+          <li>Keyboard-first navigation and visible focus states on all interactive controls.</li>
+          <li>Semantic heading hierarchy and labeled regions for assistive tech.</li>
+          <li>Color is never the only signal; text labels and icons accompany states.</li>
+          <li>Transcript-ready format for all instructional media (video references only).</li>
+          <li>Plain-language summaries and technical term glossary references.</li>
+          <li>Reduced cognitive load by chunking long content and reusing templates.</li>
+          <li>Accessible assessments with clear instructions, short item lengths, and editable free-response paths.</li>
+        </ul>
+      </section>
+
+      <section id="design-process" class="panel">
+        <h2>10) Facilitation, Process, Collaboration, and Iteration</h2>
+
+        <div class="two-col">
+          <div class="card">
+            <h3>Facilitation Guidance</h3>
+            <ul>
+              <li>Use weekly virtual office-hour clinic for hypothesis reviews.</li>
+              <li>Keep coaching comments evidence-specific, avoid judgment language.</li>
+              <li>When learners overreact, ask for required source citation first.</li>
+              <li>Use “conflict rounds” when two learners propose different conclusions.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Assessment Administration</h3>
+            <ul>
+              <li>Set timer only for operational realism, not pressure traps.</li>
+              <li>Allow two submission passes in first run with required revisions.</li>
+              <li>Apply escalation rubric for ambiguous case conclusions.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Escalation Process for Ambiguous Answers</h3>
+        <ol>
+          <li>Instructor records ambiguous or conflicting evidence.</li>
+          <li>SME reviews if classification is defensible.</li>
+          <li>Decision is documented in moderation log with rationale.</li>
+          <li>Model answer updated only when ambiguity indicates valid alternative evidence path.</li>
+        </ol>
+
+        <h3>Versioning and Change Control</h3>
+        <ul>
+          <li>Each module artifact includes version ID and date in header.</li>
+          <li>Scenario evidence packs are stored separately with controlled changelog.</li>
+          <li>Rubric changes trigger recalibration exercise for all scoring evaluators.</li>
+        </ul>
+
+        <h3>Stakeholder Map</h3>
+        <div class="two-col">
+          <div class="card">
+            <strong>Program sponsor</strong>
+            <div class="small">Approves business scope and success metrics.</div>
+          </div>
+          <div class="card">
+            <strong>SME</strong>
+            <div class="small">Validates technical realism and threat model plausibility.</div>
+          </div>
+          <div class="card">
+            <strong>Instructional designer</strong>
+            <div class="small">Owns pedagogy, assessments, and quality controls.</div>
+          </div>
+          <div class="card">
+            <strong>Learners</strong>
+            <div class="small">Provide usability feedback and confusion logs.</div>
+          </div>
+          <div class="card">
+            <strong>Security leadership</strong>
+            <div class="small">Approves escalation playbook and operational relevance.</div>
+          </div>
+          <div class="card">
+            <strong>Technical reviewers</strong>
+            <div class="small">Review scenario assumptions and evidence integrity.</div>
+          </div>
+        </div>
+
+        <h3>When feedback conflicts</h3>
+        <p>If SOC leadership wants faster closure and SMEs require stronger evidence gates, we run a decision meeting with rubric-first criteria and trade-off log, then pilot two options for one week each before finalizing.</p>
+
+        <h3>Design Decision Changed from Feedback Example</h3>
+        <div class="design-note callout">
+          <strong>Initial issue:</strong> learners reported Module 1 “too prescriptive” and rushed assessments.
+          <br /><strong>Evidence:</strong> 38% selected “high priority” on all first-wave cases.
+          <br /><strong>Change:</strong> added uncertainty tags and required “why” justification before final priority.
+          <br /><strong>Expected improvement:</strong> 20% improvement in triage discrimination and fewer over-urgent escalations.
+        </div>
+
+        <h3>Internal Quality Audit (Completed)</h3>
+        <ul class="status-list">
+          <li><span class="status-ok">OK</span> Every objective is measurable.</li>
+          <li><span class="status-ok">OK</span> Every objective has aligned instruction.</li>
+          <li><span class="status-ok">OK</span> Every objective has practice opportunities.</li>
+          <li><span class="status-ok">OK</span> Every objective is assessed (formative + final).</li>
+          <li><span class="status-ok">OK</span> Capstone requires multi-source synthesis.</li>
+          <li><span class="status-ok">OK</span> Rubric is behaviorally specific.</li>
+          <li><span class="status-ok">OK</span> Sequence progresses from foundational triage to synthesis.</li>
+          <li><span class="status-ok">OK</span> Scenario is internally consistent and synthetic.</li>
+          <li><span class="status-ok">OK</span> Technical content is realistic and non-operational.</li>
+          <li><span class="status-ok">OK</span> No fake claims of live deployment included.</li>
+          <li><span class="status-ok">OK</span> Accessibility and inclusive design were explicitly planned.</li>
+          <li><span class="status-ok">OK</span> Navigation is straightforward and interactive sections function.</li>
+          <li><span class="status-ok">OK</span> No unfinished placeholders in major sections.</li>
+          <li><span class="status-ok">OK</span> Deeper sections provide implementation detail beyond high-level claims.</li>
+        </ul>
+      </section>
+    </main>
+
+    <p class="footer">Artifact type: portfolio demonstration only; synthetic scenarios and data are invented for instructional purposes. This page contains no production systems or real incident data.</p>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.panel');
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabs.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const target = btn.dataset.tab;
+        panels.forEach(p => {
+          p.classList.toggle('active', p.id === target);
+        });
+      });
+    });
+
+    const quizData = [
+      {
+        id: 'q1',
+        type: 'single',
+        question: 'Which action best matches a sound triage response when alert evidence is incomplete but appears potentially high-impact?',
+        options: [
+          'Escalate as confirmed compromise immediately.',
+          'Assign priority using impact context and request corroborating evidence before containment.',
+          'Close as benign until an executive requests an update.',
+          'Disable every endpoint for all users to eliminate risk.'
+        ],
+        answer: [1],
+        rationale: 'Analysts should balance urgency with evidence. Immediate over-reaction can break services, while delay without action can increase risk.',
+        objective: 'O1'
+      },
+      {
+        id: 'q2',
+        type: 'multiple',
+        question: 'Which items are direct observations in the statement: “A user logged in from a new device and a PowerShell process executed from AppData"?',
+        options: [
+          'The process name was powershell.exe.',
+          'The user is malicious.',
+          'A login occurred on an unrecognized device.',
+          'The actor intended data theft.',
+          'The process executed with command line arguments.'
+        ],
+        answer: [0, 2, 4],
+        rationale: 'Direct observations are factual log fields. Intent and motive claims are interpretations or inferences unless corroborated.',
+        objective: 'O3'
+      },
+      {
+        id: 'q3',
+        type: 'scenario',
+        question: 'In 2-3 sentences, state one likely hypothesis and one piece of evidence that would support it.',
+        prompt: 'Evidence: short-lived process, uncommon registry key write, and DNS queries to mixed cloud hosts.',
+        answerKeywords: ['hypothesis', 'supports', 'DNS', 'process', 'registry'],
+        objective: 'O5'
+      },
+      {
+        id: 'q4',
+        type: 'single',
+        question: 'Which statement best reflects evidence-confidence practice?',
+        options: [
+          'The evidence proves malicious intent, so classification is confirmed.',
+          'The event is suspicious with medium confidence and must be tested against alternate hypotheses.',
+          'Any unusual DNS lookup is always a confirmed attack.',
+          'Without malware hash, nothing can be assessed.'
+        ],
+        answer: [1],
+        rationale: 'Confidence and uncertainty are explicit requirements in this program; single artifacts usually do not prove intent.',
+        objective: 'O5'
+      },
+      {
+        id: 'q5',
+        type: 'sequencing',
+        question: 'Place these actions in likely order for initial containment decision: A) isolate host, B) preserve volatile evidence, C) identify likely account owner, D) notify leadership if high-risk systems are affected.',
+        options: [
+          'B, C, A, D',
+          'C, A, B, D',
+          'B, A, C, D',
+          'A, B, C, D'
+        ],
+        answer: [2],
+        rationale: 'Best practice preserves evidence first when possible, then containment, then actor context and impact communication.',
+        objective: 'O6'
+      },
+      {
+        id: 'q6',
+        type: 'short',
+        question: 'Write one communication sentence for nontechnical leadership explaining a suspected lateral movement risk and the immediate next action.',
+        answerKeywords: ['account', 'lateral', 'contains', 'risk', 'immediate'],
+        rationale: 'Leadership communication should be concise, avoid deep tool details, and make explicit action + risk.',
+        objective: 'O8'
+      },
+      {
+        id: 'q7',
+        type: 'single',
+        question: 'Which evidence is most useful first when timeline reconstruction shows inconsistent timestamps?',
+        options: [
+          'Any single endpoint process event',
+          'NTP source and source-system time synchronization logs',
+          'Firewall vendor marketing page',
+          'Employee vacation calendar'
+        ],
+        answer: [1],
+        rationale: 'Clock reliability directly impacts chronology quality and is high priority when timestamps conflict.',
+        objective: 'O4'
+      },
+      {
+        id: 'q8',
+        type: 'multiple',
+        question: 'A report is stronger when it includes:',
+        options: [
+          'A clear evidence matrix with source references',
+          'A confidence score tied to each conclusion',
+          'Every possibility and rumor discussed in full',
+          'A section for unknowns and next evidence needs',
+          'All observations labeled as confirmed compromise'
+        ],
+        answer: [0,1,3],
+        rationale: 'A defensible report includes evidence links, confidence, and explicitly tracks uncertainty. Listing rumors without evidence is harmful.',
+        objective: 'O7'
+      }
+    ];
+
+    const quizContainer = document.getElementById('quizContainer');
+
+    function renderQuiz() {
+      quizContainer.innerHTML = quizData.map((item, idx) => {
+        const opts = item.options.map((opt, oi) => {
+          const type = item.type === 'multiple' ? 'checkbox' : 'radio';
+          const name = item.type === 'multiple' ? `q-${idx}` : `q-${idx}`;
+          return `
+            <label><input type="${type}" name="${name}" value="${oi}" /> ${opt}</label><br/>`;
+          `;
+        }).join('');
+        return `
+          <article class="quiz-question" data-id="${item.id}">
+            <p><strong>${idx + 1}. ${item.question}</strong> <span class="small">(Measurable objective: ${item.objective})</span></p>
+            ${item.type === 'short' || item.type === 'scenario' ? `<p class="small">${item.prompt ? item.prompt : ''}</p><textarea aria-label="answer for ${item.id}" data-keyword-answer="${item.id}"></textarea>` : `<div>${opts}</div>`}
+            <div class="feedback hidden" id="feedback-${item.id}"></div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function resetQuiz() {
+      renderQuiz();
+      const fb = document.getElementById('quizFeedback');
+      fb.textContent = 'No submission yet.';
+      fb.hidden = false;
+      document.getElementById('quizScoreFill').style.width = '0%';
+    }
+
+    function gradeQuiz() {
+      let score = 0;
+      let scored = 0;
+      let results = [];
+
+      quizData.forEach((item, idx) => {
+        const fb = document.getElementById(`feedback-${item.id}`);
+        fb.classList.remove('hidden');
+        let isCorrect = false;
+
+        if (item.type === 'single' || item.type === 'multiple') {
+          const values = Array.from(document.querySelectorAll(`input[name="q-${idx}"]:checked`)).map(el => Number(el.value));
+          const correct = item.answer;
+          const sorted = arr => arr.slice().sort((a,b) => a-b);
+          isCorrect = sorted(values).length === sorted(correct).length && sorted(values).every((v,i) => v === sorted(correct)[i]);
+          isCorrect ? score++ : null;
+          scored++;
+          fb.innerHTML = (isCorrect ? '<span class="status-ok">Correct</span> ' : '<span class="status-bad">Not fully correct</span> ') + item.rationale;
+        }
+
+        if (item.type === 'short' || item.type === 'scenario') {
+          const ta = document.querySelector(`textarea[data-keyword-answer="${item.id}"]`);
+          const val = (ta ? ta.value.toLowerCase() : '');
+          const hitCount = item.answerKeywords.filter(k => val.includes(k)).length;
+          isCorrect = hitCount >= 2;
+          scored++;
+          if (isCorrect) score++;
+          fb.innerHTML = (isCorrect ? '<span class="status-ok">Good</span> ' : '<span class="status-bad">Needs improvement</span> ') + item.rationale;
+        }
+
+        results.push({ id: item.id, ok: isCorrect, objective: item.objective });
+        fb.style.display = 'block';
+      });
+
+      const pct = Math.round((score / scored) * 100);
+      document.getElementById('quizScoreFill').style.width = pct + '%';
+      const feedback = document.getElementById('quizFeedback');
+      feedback.innerHTML = `<strong>Score:</strong> ${score}/${scored} (${pct}%). Use feedback boxes below each item to refine reasoning.`;
+
+      const byObjective = {};
+      results.forEach(r => {
+        if (!byObjective[r.objective]) byObjective[r.objective] = {ok:0,total:0};
+        byObjective[r.objective].total++;
+        if (r.ok) byObjective[r.objective].ok++;
+      });
+
+      const objectiveRows = Object.entries(byObjective).map(([o,d]) => `${o}: ${d.ok}/${d.total}`).join(' | ');
+      feedback.innerHTML += `\n\n<strong>Objective-level status:</strong> ${objectiveRows}`;
+    }
+
+    renderQuiz();
+
+    document.getElementById('gradeQuiz').addEventListener('click', gradeQuiz);
+    document.getElementById('resetQuiz').addEventListener('click', resetQuiz);
+
+    const scenarioPhases = [
+      {
+        stage: 'Packet 1',
+        observed: '02:13 UTC alert: Endpoint EDR reports powershell.exe launched from C:\\Users\\svc_maint\\AppData\\Temp\\update.ps1 with encoded argument.
+Source: EDR endpoint sensor on AZR-WS-117.',
+        prompt: 'Classify initial confidence and what you know vs infer.'
+      },
+      {
+        stage: 'Packet 2',
+        observed: '02:15 UTC authentication log: service-account login at odd hour to AZR-FILE-01 after unusual failed interactive login earlier.
+Source: AD/Entra feed.',
+        prompt: 'Which evidence should be treated as direct and why?' 
+      },
+      {
+        stage: 'Packet 3',
+        observed: '02:23 UTC DNS records: repetitive lookups to storage-collector.top and object-sync[.]io, 14-second spacing; one resolution maps to shared cloud service with low prevalence profile.',
+        prompt: 'Build one hypothesis and one counter-hypothesis.'
+      },
+      {
+        stage: 'Packet 4',
+        observed: '02:29 UTC process graph: parent process explorer.exe -> powershell.exe -> rundll32.exe (no corresponding enterprise software update process).
+Host telemetry indicates unusual scheduled task creation afterward.',
+        prompt: 'What is the highest value next evidence request and what remains unknown?'
+      },
+      {
+        stage: 'Packet 5',
+        observed: '02:34 UTC user context note: user on leave, ticket shows no remote-support activity; no confirmed data exfil event yet.',
+        prompt: 'Select a provisional action plan and confidence score by hypothesis.'
+      }
+    ];
+
+    let currentPhase = -1;
+    const logEl = document.getElementById('scenarioLog');
+    const feedbackEl = document.getElementById('scenarioFeedback');
+
+    function renderPhase(index) {
+      const phase = scenarioPhases[index];
+      const phaseEl = document.createElement('article');
+      phaseEl.className = 'scenario';
+      phaseEl.innerHTML = `<h3>${phase.stage}: ${phase.prompt}</h3>
+        <div class="scenario-grid">
+          <div>
+            <div class="scenario-meta"><strong>Observed evidence</strong></div>
+            <pre>${phase.observed}</pre>
+          </div>
+          <div>
+            <div class="scenario-meta"><strong>Your analysis workspace</strong></div>
+            <label>Direct observations</label>
+            <textarea data-obs="${index}"></textarea>
+            <label>Inferences / hypotheses</label>
+            <textarea data-inf="${index}"></textarea>
+            <label>What should I ask for next?</label>
+            <textarea data-next="${index}"></textarea>
+            <label>Confidence (Low/Medium/High)</label>
+            <select data-conf="${index}">
+              <option>Low</option>
+              <option>Medium</option>
+              <option>High</option>
+            </select>
+          </div>
+        </div>`;
+      logEl.appendChild(phaseEl);
+    }
+
+    function revealEvidence() {
+      if (currentPhase >= scenarioPhases.length - 1) {
+        feedbackEl.classList.remove('hidden');
+        feedbackEl.textContent = 'All phases revealed. Complete your confidence ratings and submit reasoning.';
+        return;
+      }
+      currentPhase++;
+      renderPhase(currentPhase);
+      if (currentPhase === scenarioPhases.length - 1) {
+        feedbackEl.classList.remove('hidden');
+        feedbackEl.textContent = 'Final phase loaded. Review all entered notes before submitting.';
+      }
+    }
+
+    function resetScenario() {
+      currentPhase = -1;
+      logEl.innerHTML = '';
+      feedbackEl.classList.add('hidden');
+      feedbackEl.textContent = '';
+    }
+
+    function scoreScenario() {
+      const entries = Array.from(document.querySelectorAll('#scenarioLog textarea, #scenarioLog select')).filter(el => {
+        return el.closest('.scenario') && el.value && String(el.value).trim().length > 0;
+      });
+      if (entries.length < 4) {
+        feedbackEl.classList.remove('hidden');
+        feedbackEl.textContent = 'Complete at least one reasoned response in each revealed phase before submitting.';
+        return;
+      }
+
+      const confSelections = Array.from(document.querySelectorAll('select[data-conf]')).map(el => el.value);
+      const hasHighSpread = confSelections.includes('High') || confSelections.includes('Medium');
+      let status = 'Good direction. Your reasoning is present and shows uncertainty handling.';
+      if (!hasHighSpread) {
+        status = 'You used only Low confidence. For a real review, confidence should shift as evidence grows.';
+      }
+
+      feedbackEl.classList.remove('hidden');
+      feedbackEl.textContent = `Scenario submission received. ${status}\n` +
+        'Observed-vs-inference discipline appears to improve across phases if your entries include source-specific language.\n' +
+        'Reviewer model focuses on your evidence tagging, whether you requested missing data that resolves ambiguity, and whether conclusions are appropriately hedged.';
+    }
+
+    document.getElementById('revealEvidence').addEventListener('click', revealEvidence);
+    document.getElementById('resetScenario').addEventListener('click', resetScenario);
+    document.getElementById('scoreScenario').addEventListener('click', scoreScenario);
+  </script>
+</body>
+</html>
